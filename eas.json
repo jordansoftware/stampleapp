@@ -1,0 +1,49 @@
+{
+  "cli": {
+    "version": ">= 16.20.1",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "DATABASE_ID": "68dcec7a00283929f59e",
+        "COLLECTION_ID": "workdays",
+        "ENDPOINT": "https://cloud.appwrite.io/v1",
+        "PROJECT_ID": "stempelapp13"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "DATABASE_ID": "68dcec7a00283929f59e",
+        "COLLECTION_ID": "workdays",
+        "ENDPOINT": "https://cloud.appwrite.io/v1",
+        "PROJECT_ID": "stempelapp13"
+      }
+    },
+    "production": {
+      "autoIncrement": true,
+      "distribution": "store",
+      "android": {
+        "buildType": "app-bundle"
+      },
+      "env": {
+        "DATABASE_ID": "68dcec7a00283929f59e",
+        "COLLECTION_ID": "workdays",
+        "ENDPOINT": "https://cloud.appwrite.io/v1",
+        "PROJECT_ID": "stempelapp13"
+      }
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
