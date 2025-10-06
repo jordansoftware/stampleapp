@@ -1,139 +1,148 @@
-# Arbeitszeit-Tracker (StampleApp)
+# ⏱ StampleApp
 
-Une application React Native pour le suivi du temps de travail avec une interface moderne et intuitive.
+A modern and intuitive **React Native** app for tracking work hours.
 
-## Fonctionnalités
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Expo](https://img.shields.io/badge/Expo-000000?style=for-the-badge&logo=expo&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Appwrite](https://img.shields.io/badge/Appwrite-FF0000?style=for-the-badge&logo=appwrite&logoColor=white)
 
-### ⏰ Enregistrement du temps de travail
-- Sélection de la date (par défaut : date actuelle)
-- Sélection de l'heure d'arrivée et de fin via des sélecteurs de temps
-- Calcul automatique des heures totales pour chaque jour
+---
 
-### 📊 Dashboard et aperçu
-- Liste de tous les jours de travail avec date, heure de début, heure de fin et heures totales
-- Affichage des heures totales cumulées
-- Filtrage par semaine ou par mois
-- Possibilité de supprimer des entrées
+# 📋 Features
 
-### 💾 Stockage des données
-- Aucune authentification requise
-- Stockage local des données sur l'appareil avec AsyncStorage
-- Persistance des données entre les sessions
+## ⏰ Work Time Logging
+- Record work time for each day
+- Select the date (default: current date)
+- Pick start and end times using a time picker
+- Automatic calculation of total hours per day
 
-### 🎨 Interface utilisateur
-- Interface mobile moderne et claire en allemand
-- Écran principal : Dashboard avec liste et heures totales
-- Bouton "Neuer Arbeitstag" pour ajouter une nouvelle entrée
-- Design Material Design avec couleurs cohérentes
+## 📊 Dashboard & Overview
+- List all work days with date, start time, end time, and total hours
+- Show cumulative total hours
+- Filter entries by week or month
+- Option to delete entries
 
-## Installation et démarrage
+## 💾 Data Storage
+- No authentication required
+- Local data storage using **AsyncStorage**
+- Data persists across sessions
 
-### Prérequis
-- Node.js (version 14 ou supérieure)
-- npm ou yarn
-- Expo CLI installé globalement
-- Expo Go app sur votre appareil mobile (pour le test)
+## 🎨 User Interface
+- Clean, modern mobile UI in German
+- Main screen: Dashboard with workday list and total hours
+- Button **"Neuer Arbeitstag"** to add new entries
+- Material Design-inspired color scheme
 
-### Installation
-1. Clonez le repository ou téléchargez les fichiers
-2. Naviguez vers le dossier du projet :
-   ```bash
-   cd stampleapp
+---
+
+# ⚙️ Installation & Setup
+
+## Prerequisites
+- Node.js (version 14 or higher) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)
+- npm or yarn ![npm](https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white)
+- **Expo CLI** installed globally ![Expo](https://img.shields.io/badge/Expo-000000?style=for-the-badge&logo=expo&logoColor=white)
+- **Expo Go** app on your mobile device (for testing)
+
+## Installation
+```bash
+# Clone the repository
+git clone https://github.com/jordansoftware/stampleapp.git
+cd stampleapp
+
+# Install dependencies
+npm install
+# or
+yarn install
    ```
+### Running the App
+1. Start Expo development server :
+```bash
+npm start
+ # ou
+ expo start
+```
+1-Scan the QR code with Expo Go on your mobile device  
+2-The app will launch automatically
 
-3. Installez les dépendances :
-   ```bash
-   npm install
-   ```
+### Available Scripts
 
-### Démarrage
-1. Démarrez l'application Expo :
-   ```bash
-   npm start
-   # ou
-   expo start
-   ```
+* npm start – Start Expo development server
 
-2. Scannez le QR code avec l'application Expo Go sur votre appareil mobile
-3. L'application se lancera automatiquement
+* npm run android – Launch app on Android emulator
 
-### Scripts disponibles
-- `npm start` - Démarre le serveur de développement Expo
-- `npm run android` - Lance l'application sur un émulateur Android
-- `npm run ios` - Lance l'application sur un simulateur iOS
-- `npm run web` - Lance l'application dans un navigateur web
+* npm run ios – Launch app on iOS simulator
 
-## Structure du projet
+* npm run web – Launch app in browser
 
+## 🗂 Project Structure
 ```
 stampleapp/
-├── App.js                 # Point d'entrée principal avec navigation
-├── package.json           # Dépendances et scripts
-├── screens/              # Écrans de l'application
-│   ├── DashboardScreen.js    # Écran principal avec liste des jours de travail
-│   └── AddWorkDayScreen.js   # Écran d'ajout d'un nouveau jour de travail
-├── components/           # Composants réutilisables
-│   └── DateTimePicker.js     # Sélecteur de date et heure
-├── services/            # Services et logique métier
-│   └── StorageService.js     # Service de stockage local avec AsyncStorage
-└── assets/              # Images et ressources
+├── App.js                   # Main entry point with navigation
+├── package.json             # Dependencies and scripts
+├── screens/                 # App screens
+│ ├── DashboardScreen.js     # Dashboard with workday list
+│ └── AddWorkDayScreen.js    # Screen to add a new workday
+├── components/              # Reusable components
+│ └── DateTimePicker.js      # Date & time picker component
+├── services/                # Services & business logic
+│ ├── StorageService.js      # Local storage service with AsyncStorage
+│ ├── workService.js         # Workday CRUD logic
+│ └── ReportService.js       # PDF report generation
+└── assets/                  # Images and resources
 ```
 
-## Technologies utilisées
 
-- **React Native** - Framework de développement mobile
-- **Expo** - Plateforme de développement React Native
-- **React Navigation** - Navigation entre les écrans
-- **AsyncStorage** - Stockage local des données
-- **react-native-date-picker** - Sélecteurs de date et heure
+## ⚡ Technical Features
 
-## Fonctionnalités techniques
 
-### Stockage des données
-- Utilisation d'AsyncStorage pour la persistance locale
-- Structure de données JSON pour les jours de travail
-- Gestion des erreurs de stockage
+* Data Storage: AsyncStorage with JSON format, error handling
 
-### Calculs automatiques
-- Calcul des heures totales basé sur la différence entre heure de début et fin
-- Validation des heures (l'heure de fin doit être après l'heure de début)
-- Formatage des dates et heures en allemand
+* Automatic Calculations: Total work hours calculated from start/end times
 
-### Interface utilisateur
-- Design responsive et moderne
-- Couleurs cohérentes (bleu #2196F3 comme couleur principale)
-- Animations et transitions fluides
-- Support du mode sombre (préparé)
+* Validation: End time must be after start time
 
-## Personnalisation
+* German Date & Time Formatting
 
-### Couleurs
-Les couleurs principales peuvent être modifiées dans les fichiers de style :
-- Couleur principale : `#2196F3`
-- Couleur de fond : `#f5f5f5`
-- Couleur de texte : `#333`
+* Responsive & Modern UI: Consistent color palette (#2196F3 main color)
 
-### Langue
-L'application est entièrement en allemand. Pour changer la langue, modifiez les textes dans les composants et les formats de date/heure.
+* PDF Reports: Generate work hours reports in PDF format
 
-## Développement
+## 🎨 Customization
 
-### Ajout de nouvelles fonctionnalités
-1. Créez de nouveaux composants dans le dossier `components/`
-2. Ajoutez de nouveaux écrans dans le dossier `screens/`
-3. Étendez le service de stockage si nécessaire
-4. Mettez à jour la navigation dans `App.js`
+* Colors: Modify in the style files
 
-### Tests
-L'application peut être testée sur :
-- Appareils Android (via Expo Go)
-- Appareils iOS (via Expo Go)
-- Navigateurs web (fonctionnalités limitées)
+* Primary color: #2196F3
 
-## Support
+* Background color: #f5f5f5
 
-Pour toute question ou problème, consultez la documentation Expo ou React Native.
+* Text color: #333
 
-## Licence
+* Language: Currently in English; change text and date formats in components
 
-Ce projet est sous licence 0BSD (voir package.json).
+## 🧑‍💻 Development
+
+* Add new components in components/
+
+* Add new screens in screens/
+
+* Extend storage service if needed
+
+* Update navigation in App.js
+
+## 📱 Testing
+
+* Android devices (via Expo Go)
+
+* iOS devices (via Expo Go)
+
+* Browser (limited features)
+
+## 💡 Support
+
+For questions or issues, consult Expo Documentation
+ or React Native Documentation
+
+## 📄 License
+
+This project is licensed under 0BSD (see package.json)
