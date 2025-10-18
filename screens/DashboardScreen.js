@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import {
+  ScrollView,
   View,
   Text,
   StyleSheet,
@@ -12,6 +13,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { StorageService } from '../services/StorageService';
 import { ReportService } from '../services/ReportService';
 import { getWorkDays as getWorkDaysApi, deleteWorkDay as deleteWorkDayApi } from '../services/workService';
+import { markAsPaid } from '../services/workService';
+
 
 export const DashboardScreen = ({ navigation }) => {
   const [workDays, setWorkDays] = useState([]);
@@ -89,7 +92,14 @@ export const DashboardScreen = ({ navigation }) => {
       return StorageService.getWorkDaysByWeek(workDays, startOfWeek);
     } else if (filter === 'month') {
       return StorageService.getWorkDaysByMonth(workDays, selectedYear, selectedMonth);
+    } else if (filter === 'bezahlt') {
+      return workDays.filter((d) => d.status === 'bezahlt');
+
     }
+    else if (filter === 'noch nicht bezahlt') {
+      return workDays.filter((d) => d.status !== 'bezahlt');
+    }
+
     return workDays;
   };
 
@@ -103,6 +113,43 @@ export const DashboardScreen = ({ navigation }) => {
         <Text style={styles.workDayHours}>
           {item.totalHours.toFixed(2)} Stunden
         </Text>
+
+
+
+
+        <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 4 }}>
+          <Text
+            style={{
+              fontWeight: '600',
+              color: item.zustand === 'bezahlt' ? 'green' : 'red',
+            }}
+          >
+            {item.zustand || 'noch nicht bezahlt'}
+          </Text>
+
+          {item.zustand !== 'bezahlt' && (
+            <TouchableOpacity
+              style={{
+                marginLeft: 10,
+                paddingHorizontal: 8,
+                paddingVertical: 2,
+                backgroundColor: '#4CAF50',
+                borderRadius: 4,
+              }}
+              onPress={async () => {
+                try {
+                  await markAsPaid(item.id);
+                  await loadWorkDays(); // rafraîchit la liste
+                } catch (e) {
+                  Alert.alert('Fehler', 'Zustand konnte nicht aktualisiert werden.');
+                }
+              }}
+            >
+              <Text style={{ color: 'white', fontWeight: '600' }}>bezahlt markieren</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+
       </View>
       <TouchableOpacity
         style={styles.deleteButton}
@@ -122,7 +169,7 @@ export const DashboardScreen = ({ navigation }) => {
       const start = new Date(now.setDate(now.getDate() - now.getDay()));
       const end = new Date(start);
       end.setDate(start.getDate() + 6);
-      return `${start.toLocaleDateString('de-DE')} – ${end.toLocaleDateString('de-DE')}`;
+      return `${start.toLocaleDateString('de-DE')} –  ${end.toLocaleDateString('de-DE')}`;
     }
     if (filter === 'month') {
       return new Date(selectedYear, selectedMonth, 1).toLocaleDateString('de-DE', {
@@ -139,8 +186,8 @@ export const DashboardScreen = ({ navigation }) => {
       const start = new Date(now.setDate(now.getDate() - now.getDay()));
       const end = new Date(start);
       end.setDate(start.getDate() + 6);
-      const s = start.toISOString().slice(0,10);
-      const e = end.toISOString().slice(0,10);
+      const s = start.toISOString().slice(0, 10);
+      const e = end.toISOString().slice(0, 10);
       return `bericht_${s}_bis_${e}.pdf`;
     }
     if (filter === 'month') {
@@ -180,32 +227,69 @@ export const DashboardScreen = ({ navigation }) => {
         </Text>
       </View>
 
-      <View style={styles.filterContainer}>
-        <TouchableOpacity
-          style={[styles.filterButton, filter === 'all' && styles.filterButtonActive]}
-          onPress={() => setFilter('all')}
+      import {ScrollView, TouchableOpacity, Text, View} from 'react-native';
+
+      <View style={{ backgroundColor: 'white', paddingVertical: 10 }}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 10 }}
         >
-          <Text style={[styles.filterButtonText, filter === 'all' && styles.filterButtonTextActive]}>
-            Alle
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.filterButton, filter === 'week' && styles.filterButtonActive]}
-          onPress={() => setFilter('week')}
-        >
-          <Text style={[styles.filterButtonText, filter === 'week' && styles.filterButtonTextActive]}>
-            Woche
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.filterButton, filter === 'month' && styles.filterButtonActive]}
-          onPress={() => setFilter('month')}
-        >
-          <Text style={[styles.filterButtonText, filter === 'month' && styles.filterButtonTextActive]}>
-            Monat
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'all' && styles.filterButtonActive]}
+            onPress={() => setFilter('all')}
+          >
+            <Text style={[styles.filterButtonText, filter === 'all' && styles.filterButtonTextActive]}>
+              Alle
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'week' && styles.filterButtonActive]}
+            onPress={() => setFilter('week')}
+          >
+            <Text style={[styles.filterButtonText, filter === 'week' && styles.filterButtonTextActive]}>
+              Woche
+            </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'month' && styles.filterButtonActive]}
+            onPress={() => setFilter('month')}
+          >
+            <Text style={[styles.filterButtonText, filter === 'month' && styles.filterButtonTextActive]}>
+              Monat
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'bezahlt' && styles.filterButtonActive]}
+            onPress={() => setFilter('bezahlt')}
+          >
+            <Text
+              style={[
+                styles.filterButtonText,
+                filter === 'bezahlt' && styles.filterButtonTextActive,
+              ]}
+            >
+              bezahlt
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, filter === 'noch nicht bezahlt' && styles.filterButtonActive]}
+            onPress={() => setFilter('noch nicht bezahlt')}
+          >
+            <Text
+              style={[
+                styles.filterButtonText,
+                filter === 'noch nicht bezahlt' && styles.filterButtonTextActive,
+              ]}
+            >
+              Noch nicht bezahlt
+            </Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
+
 
       {filter === 'month' && (
         <View style={styles.monthPickerRow}>

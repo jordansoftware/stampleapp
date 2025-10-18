@@ -51,6 +51,7 @@ export const getWorkDays = async () => {
     .map((d) => ({
       id: d.$id,
       date: d.date,
+       // <- On prend exactement ce qui est dans la DB
       // compatibilité: accepte startTime/start_time/start
       startTime: d.startTime || d.start_time || d.start,
       endTime: d.endTime || d.end_time || d.end,
@@ -63,6 +64,8 @@ export const getWorkDays = async () => {
         if (typeof d.totalHours === 'number') return d.totalHours;
         return 0;
       })(),
+       zustand: d.status,
+       status: d.status,
     }))
     .sort((a, b) => new Date(b.date) - new Date(a.date));
   return items;
@@ -73,4 +76,14 @@ export const deleteWorkDay = async (id) => {
   return true;
 };
 
+export const markAsPaid = async (id) => {
+  
+  const doc = await appwriteDatabases.updateDocument(
+    DATABASE_ID,
+    COLLECTION_ID,
+    id,
+    { status: 'bezahlt' }
+  );
+  return doc;
+};
 

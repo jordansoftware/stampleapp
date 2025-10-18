@@ -12,6 +12,7 @@ export class ReportService {
           <td>${d.startTime}</td>
           <td>${d.endTime}</td>
           <td style="text-align:right">${d.totalHours.toFixed(2)}</td>
+          <td>${d.status}</td>
         </tr>`
       )
       .join('');
@@ -40,6 +41,7 @@ export class ReportService {
               <th>Start</th>
               <th>Ende</th>
               <th style="text-align:right">Stunden</th>
+              <th>Zustand</th>
             </tr>
           </thead>
           <tbody>

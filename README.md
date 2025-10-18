@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Arbeitszeit-Tracker (StampleApp)
 
 Une application React Native pour le suivi du temps de travail avec une interface moderne et intuitive.
@@ -137,3 +138,6 @@ Pour toute question ou problème, consultez la documentation Expo ou React Nativ
 ## Licence
 
 Ce projet est sous licence 0BSD (voir package.json).
+=======
+# stampleapp
+>>>>>>> e1edd897c9d80246a9de661168881c3fa4856458
