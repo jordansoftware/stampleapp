@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+
 import {
   ScrollView,
   View,
@@ -227,7 +228,7 @@ export const DashboardScreen = ({ navigation }) => {
         </Text>
       </View>
 
-      import {ScrollView, TouchableOpacity, Text, View} from 'react-native';
+     
 
       <View style={{ backgroundColor: 'white', paddingVertical: 10 }}>
         <ScrollView
