@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# Arbeitszeit-Tracker (StampleApp)
+# Arbeitszeit-Tracker (StempelnApp)
 
 Une application React Native pour le suivi du temps de travail avec une interface moderne et intuitive.
 
